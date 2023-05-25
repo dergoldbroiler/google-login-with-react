@@ -1,25 +1,33 @@
 import logo from './logo.svg';
 import './App.css';
 
+import { GoogleLogin } from '@react-oauth/google';
+import { useState } from 'react';
+
 function App() {
+
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const responseMessage = (response) => {
+    console.log(response);
+    setLoggedIn(true);
+  };
+  const errorMessage = (error) => {
+      console.log(error);
+      setLoggedIn(false);
+  };
+  if(loggedIn) return (
+    <div className="App">
+      <h1>Google Login mit React</h1>
+      Super, das hat geklappt!
+    </div>
+  )
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Google Login mit React</h1>
+      <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
     </div>
-  );
+  )
 }
 
 export default App;
